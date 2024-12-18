@@ -1,0 +1,477 @@
+REACT COMPONENT LIFECYCLE
+app2.js
+import React from 'react'
+import './App.css'
+function App2() {
+    const emojifn=event=>alert(event.target.id)
+    const emoji=[
+    {
+        em1:'💆',
+        ename:'face palm',
+    },
+    {
+        em1:'🐈 ',
+        ename:'Cat', 
+    },
+    {
+        em1:'🐕 ',
+        ename: 'Dog',
+    },
+    {
+        em1:'🌹 ',
+        ename: 'Rose',
+    },
+    {
+        em1:'🍎 ',
+        ename: 'Apple',
+    }
+    ]
+    return (
+        <div className='container'>
+            <h1>Welcome to GNIMS</h1>
+            <p>Its Practical Time </p>
+            <ul>
+            {emoji.map((item) => (
+                    <li key={item.id}>
+                        <button onClick={emojifn}>
+                            <span
+                                role="img"
+                                aria-label={item.ename}
+                                id={item.ename}
+                            >
+                                {item.em1}
+                            </span>
+                        </button>
+                    </li>
+                ))}
+                <li>
+                <button onClick={emojifn}>
+                        <span
+role="img" aria-label="party popper" id="pparty
+popper">🎉</span>
+                    </button>
+                </li>
+                <li>
+                <button onClick={emojifn}>
+                        <span
+role="img" aria-label="woman dancing" id="woman
+pouting">🙎‍♀️
+</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    );
+}
+export default App2;
+
+index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App2 from './App2';
+import reportWebVitals from './reportWebVitals';
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App2 />
+  </React.StrictMode>
+);
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+
+
+
+
+
+IMPLEMENT CLASS AND FUNCTIONAL COMPONENT(DRAG DROP 2 IMAGES)
+App.js
+import logo from './logo.svg';
+import './App.css';
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.js</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
+    </div>
+  );
+}
+export default App;
+
+Counter.js
+import React, { Component } from 'react'
+export class Counter extends Component {
+    constructor(props) {
+      super(props)
+    
+      this.state = {
+         count: 0
+      }
+    }
+    updateClick=()=>{
+        this.setState({count:this.state.count+1})
+    }
+  render() {
+    const {count}=this.state;
+    return (
+      <div>
+        <button onClick={this.updateClick}>Visited {count} times</button>
+      </div>
+    )
+  }
+}
+export default Counter;
+
+index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import reportWebVitals from './reportWebVitals';
+import App from './product';
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+product.js
+import React from 'react';
+import './App.css';
+import ProductImg from './productimg.js'
+import pimg from './p1.jpg'
+import pimg2 from './p2.jpg'
+import Counter from './Counter.js';
+function App() {
+  return(
+    <div className="container">
+     <h1>List of Products</h1>
+     <div className="productImg">
+      <ProductImg im={pimg}></ProductImg>   
+     </div>
+     <div className="productImg">
+      <ProductImg im={pimg2}></ProductImg>   
+     </div>
+     <div>
+        <Counter></Counter>
+        </div>
+    </div>
+  )
+}
+export default App;
+
+productimg.js
+import React, {Component} from 'react';
+export class productimg extends Component
+{
+    render() {
+        return(
+            <>
+                <img src={this.props.im} alt="This is image"></img>
+                <p>This is product image</p>
+            </>
+        );
+    }
+}
+export default productimg
+
+
+IMPORT EXPORT FILES
+index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import Cart from './cart';
+import reportWebVitals from './reportWebVitals';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <Cart />
+  </React.StrictMode>
+);
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+cart.js
+import './App.css';
+import ProductCard from './productcard'
+import Data from './data'
+function Cart() {
+  return (
+    <div className="wrapper">
+    <h1>Products</h1>
+    {Data.map(product => (
+    <ProductCard
+    key={product.pname}
+    pname={product.pname}
+    price={product.price}
+    rating={product.rating}
+    features={product.features}
+    additional={product.additional}
+    />
+    ))}
+   </div>
+  );
+}
+export default Cart;
+
+productCart.css
+.product-wrapper {
+    border: solid black 1px;
+    margin: 10px;
+    padding: 10px;
+    width: 200px;
+}
+.product-wrapper button {
+    font-size: 1em;
+    border: solid black 1px;
+    padding: 10;
+    background: none;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+data.js
+const Data= [
+    {
+        pname: 'Samsung Galaxy S22 5G',
+        price: 72900,
+        rating: 4.5,
+        features: ['Android', '6.1 inch display', '8GB Ram'],
+        additional: 'Samsung Galaxy welcome to 5G world'
+    },
+    {
+        pname: 'SOnePlus Nord 2T 5G',
+        price: 33999,
+        rating: 4.2,
+        features: ['Android', '6.1 inch display', '8GB Ram'],
+        additional: 'Welcome to the power of one Plus Camera'
+    },
+    {
+        pname: 'Realme C11 2021',
+        price: 8900,
+        rating: 3.2,
+        features: ['Android', '6.1 inch display', '8GB Ram'],
+        additional: 'Make it Real'
+    },{
+        pname: 'iPhone-16 pro-Max',
+        price: 120000,
+        rating: 4.0,
+        features: ['IOS', '5 inch display', '6GB Ram'],
+        additional: 'Think Differently'
+    }
+]
+export default Data;
+
+prodcutcard.js
+import React from 'react';
+import './productCart.css'
+function ProductCard({ additional,pname,price,rating,features,showAdditional}) {
+    
+    return (
+     <div className='product-wrapper'>
+     <h2>{pname}</h2>
+     <h3>{price}</h3>
+     <h4>{rating}</h4>
+     <div>{features.join(',')}</div>
+     <button onClick={event=>alert(additional)}>More Info</button>
+     </div>
+     );
+}
+ export default  ProductCard;
+
+App.css
+.App {
+  text-align: center;
+}
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+  text-align: center;
+ }
+ .wrapper h1 {
+  text-align: center;
+  width: 100%;
+ }
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+.App-link {
+  color: #61dafb;
+}
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+
+
+STATE PROPS
+index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
+
+App.js
+import './App.css';
+import Product from './Product';
+function App() {
+  return (
+    <>
+    <Product></Product>
+    </>
+  );
+}
+export default App;
+
+product.css
+.product span {
+    font-size: 100px;
+}
+.wrapper {
+    padding: 20px;
+    font-size: 20px;
+    flex: auto;
+}
+
+.wrapper button {
+    font-size: 20px;
+    background: blueviolet;  
+}
+
+product.js
+import React, { Component } from 'react'
+import './product.css'
+const products = [
+    {
+      pr: '🍦',
+      name: 'ice cream',
+      price: 50
+    },
+    {
+      pr: '🍩',
+      name: 'donuts',
+      price: 190,
+    },
+    {
+      pr: '🍉',
+      name: 'watermelon',
+      price: 30
+    }
+  ];
+
+  class Product extends Component {
+    state={
+        cart:[],
+        total:0
+    }
+    currencyOptions = {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }
+    
+      getTotal = () => {
+        return this.state.total.toLocaleString(undefined, this.currencyOptions)
+      }
+      add = (product) => {
+        this.setState(state => ({
+          cart: [...state.cart, product.name],
+          total: state.total + product.price
+        }))
+      }
+      remove = (product) => {
+        this.setState(state => {
+          const cart = [...state.cart];
+          cart.splice(cart.indexOf(product.name))
+          return ({
+            cart,
+            total: state.total - product.price
+          })
+        })
+      }
+  render() {
+    return (
+        <div className="wrapper">
+        <div>
+          Shopping Cart: {this.state.cart.length} items
+        </div>
+        <div>Total: {this.getTotal()}</div>
+        <div></div>
+        <div>
+        {products.map(product => (
+            <div key={product.name}>
+              <div className="product">
+                <span role="img" aria-label={product.name}>{product.pr}</span>
+              </div>
+              <button onClick={() => this.add(product)}>Add</button>
+              <button onClick={() => this.remove(product)}>Remove</button>
+            </div>
+          ))}
+        </div>
+        </div>
+    )
+  }
+}
+
+export default Product
+
+
+

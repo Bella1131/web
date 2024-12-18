@@ -1,0 +1,715 @@
+ARITHMETIC AND STRING OPERATIONS
+math.js
+//math.js
+module.exports = 
+{
+	add: (a, b) => a + b,
+ 	subtract: (a, b) => a - b,
+ 	multiply: (a, b) => a * b,
+	divide: (a, b) => a / b,
+};
+string.js
+// strings.js
+module.exports =
+{
+	capitalize: (str) => str.charAt(0).toUpperCase() + str.slice(1),
+	reverse: (str) => str.split('').reverse().join(''),
+};
+main.js
+// main.js
+const math =  require('./math');
+const strings = require('./strings');
+const resultAdd = math.add(10,5);
+console.log(`10 + 5 = ${resultAdd}`);
+const sub = math.subtract(20,40);
+console.log(`20 - 40 = ${sub}`);
+const resultMultiply = math.multiply(7,3);
+console.log(`7 * 3 = ${resultMultiply}`);
+const resultDivide = math.divide(50,5);
+console.log(`50 / 5 = ${resultDivide}`);
+const inputString = 'hello, world!';
+const capitalizedString =
+strings.capitalize(inputString);
+console.log(`Capitalized: ${capitalizedString}`);
+const reversedString =
+strings.reverse(inputString);
+console.log(`Reversed: ${reversedString}`);
+
+FACTORS 
+main.js
+// main.js
+const factors = require('./factors');  // Ensure the path is correct
+const number = 36;
+const factorsOfNumber = factors.findFactors(number);
+console.log(`Factors of ${number}: ${factorsOfNumber.join(', ')}`);
+factors.js
+// factors.js
+module.exports = {
+  findFactors: (number) => {
+    const factors = [];
+    for (let i = 1; i <= number; i++) {
+      if (number % i === 0) {
+        factors.push(i);
+      }
+    }
+    return factors;
+  }
+};
+
+FIBBONACCI
+main2.js
+// main2.js
+const fibonacci = require('./fibonacci');
+const terms = 10;
+const fibonacciSeries = fibonacci.generateFibonacci(terms);
+console.log(`First ${terms} terms of the Fibonacci series: ${fibonacciSeries.join(', ')}`);
+fibonacci.js
+// fibonacci.js
+module.exports = {
+  generateFibonacci: (n) => {
+    const fibonacciSeries = [0, 1];
+    for (let i = 2; i < n; i++) {
+      fibonacciSeries.push(fibonacciSeries[i - 1] + fibonacciSeries[i - 2]);
+    }
+    return fibonacciSeries;
+  }
+};
+
+NODEJS EVENTS
+firstevent.js
+const prompt = require('prompt-sync')();
+const EventEmitter = require('events');
+const eventEmitter = new EventEmitter();
+function performOperation(operator, num1 , num2)
+{
+	let result;
+	switch(operator)
+	{
+		case '+':
+			result = num1 + num2;
+			break;
+		case '-':
+			result = num1 - num2;
+			break;
+		case '*':
+			result = num1 * num2;
+			break;
+		case '/':
+			result = num1 / num2;
+			break;
+		default:
+			console.log('Invalid operator');
+			return;
+	}
+	eventEmitter.emit('calculationResult',result);
+}
+eventEmitter.on('calculationResult',(result) => {
+	console.log('Result:'+result);
+	askForInput();
+});
+function askForInput()
+{
+	const input = prompt('enter expression (e.g.,5+3):');
+	if(input == 'exit')
+	{
+		process.exit(0);
+	}
+	else
+	{
+		const [num1, operator, num2]= input.split(' ');
+		if(num1 && operator && num2)
+		{
+			performOperation(operator,parseFloat(num1),parseFloat(num2));
+		}
+		else
+		{
+			console.log('Invalid input. Please enter two numbers and an operator .');
+			askForInput();
+		}
+	}
+}
+console.log('Simple calculator');
+console.log('Usage: Enter two numbers and an operator(+,-,*,/)please dont put spaces or type(exit) to terminate');
+askForInput();
+
+
+PRIME NUMBER FUNCTION
+const prompt = require('prompt-sync')();
+const num = parseInt(prompt('Enter a number: '));
+//Function
+function isPrime(num)
+{
+for(let i=2; i < num; i++)
+{
+	if(num % i === 0)
+	{
+		return false;
+	}
+}
+	return true;
+}
+
+if(isPrime(num))
+{
+	console.log(num +" is a prime number");
+}
+else
+{	
+	console.log(num + " is not a prime number");
+}
+
+FIBBONACCI FUNCTION
+const prompt = require('prompt-sync')();
+function fibonacci()
+{
+let n1 = 0, n2 = 1, nT;
+console.log('Fibonacci Series:');
+for (let i = 1; i <= num; i++) {
+console.log(n1);
+nT = n1 + n2;
+n1 = n2;
+n2 = nT;
+}
+}
+const num = parseInt(prompt('Enter the end term: '));
+fibonacci(num);
+console.log('fibonacci series till the given end term is: ');
+
+FACTORIAL FUNCTION
+const prompt= require('prompt-sync')();
+function fact(n)
+{
+	let ans=1;
+	if(n===0)
+		return 1;
+	for(let i=2; i<=n; i++)
+		ans=ans*i;
+	return ans;
+}
+const num=parseInt(prompt('Enter the number: '));
+console.log('Factorial of '+num+' is '+fact(num));
+
+FILE OPERATIONS-READ,WRITE,CREATE,DELETE
+const fs = require('fs');
+const prompt = require('prompt-sync')();
+function createFile(fileName) 
+{
+    fs.writeFile(fileName, '', (error) => {
+        if (error) 
+	{
+            console.error('error creating the file:', error);
+        } 
+	else 
+	{
+            console.log('File created successfully.');
+        }
+    });
+}
+function writeToFile(fileName, content) 
+{
+    fs.appendFile(fileName, content, (error) => {
+        if (error) 
+	{
+            console.error('error writing to the file:', error);
+        } 
+	else 
+	{
+            console.log('Content has been written to the file successfully.');
+        }
+    });
+}
+function readFromFile(fileName) 
+{
+    fs.readFile(fileName, 'utf8', (error, data) => {
+        if (error) 
+	{
+            console.error('error reading the file:', error);
+        } 
+	else 
+	{
+            console.log('Content read from the file:');
+            console.log(data);
+        }
+    });
+}
+function deleteFile(fileName) {
+    fs.unlink(fileName, (error) => {
+        if (error) 
+	{
+            console.error('error deleting the file:', error);
+        } 
+	else 
+	{
+            console.log('File has been deleted successfully.');
+        }
+    });
+}
+function main() 
+{
+
+	let fileName;
+        console.log('Menu:');
+        console.log('1. Create File');
+        console.log('2. Write to File');
+        console.log('3. Read from File');
+        console.log('4. Delete File');
+        console.log('5. Exit');
+        const choice = parseInt(prompt('Enter your choice: '))
+        switch (choice) 
+	{
+            case 1:
+		fileName = prompt('Enter file name to be created: ');
+                createFile(fileName);
+		setTimeout(() => {main();}, 1000);
+                break;
+            case 2:
+		fileName = prompt('Enter file name in which data is to be entered: ');
+                const content = prompt('Enter content to write to the file: ');
+                writeToFile(fileName, content);
+		setTimeout(() => {main();}, 1000);
+                break;
+            case 3:
+		fileName = prompt('Enter file name to be read: ');
+                readFromFile(fileName);
+		setTimeout(() => {main();}, 1000);
+                break;		
+            case 4:
+		fileName = prompt('Enter file name to be deleted: ');
+                deleteFile(fileName);
+		setTimeout(() => {main();}, 1000);
+                break;
+            case 5:
+                console.log('Exiting program.');
+                process.exit(0);
+            default:
+                console.log('Invalid choice. Please try again.');
+        }
+    
+}
+main();
+
+
+FILE OPERATION-FACTORIAL,IS PRIME OR NOT,NIVEN OR NOT
+const fs = require('fs');
+const readline = require('readline');
+
+const rl = readline.createInterface({
+	input: process.stdin,
+	output: process.stdout
+});
+function showMenu() {
+	console.log("\nChoose an operation:");
+	console.log("1. Calculate Factorial");
+	console.log("2. Check Prime Number");
+	console.log("3. Check Niven Number");
+	console.log("4. Read Output File");
+	console.log("5. Exit");
+}
+function calculateFactorial(num) {
+	if (num < 0) return 'Factorial is not defined for negative numbers.';
+	if (num === 0) return 1;
+	let factorial = 1;
+	for (let i = 1; i <= num; i++) {
+		factorial *= i;
+	}
+	return factorial;
+}
+function isPrime(num) {
+	if (num <= 1) return false;
+	for (let i = 2; i <= Math.sqrt(num); i++) {
+		if (num % i === 0) return false;
+	}
+	return true;
+}
+
+function isNiven(num) {
+	const sumOfDigits = num.toString().split('').reduce((acc, digit) => acc +
+Number(digit), 0);
+	return num % sumOfDigits === 0;
+}
+function writeToFile(content) {
+	fs.appendFile('output.txt', content + '\n', (err) => {
+		if (err) {
+			console.error('Error writing to file:', err);
+		} else {
+			console.log('Output saved to output.txt');
+		}
+	});
+}
+function calculateAndStoreFactorial() {
+	rl.question('Enter a number to calculate its factorial: ', (input) => {
+		const num = parseInt(input);
+		const result = calculateFactorial(num);
+		const output = `Factorial of ${num} is: ${result}`;
+		console.log(output);
+		writeToFile(output);
+		showMenu();
+		getUserChoice();
+	});
+}
+function checkPrimeNumber() {
+	rl.question('Enter a number to check if it is prime: ', (input) => {
+		const num = parseInt(input);
+		const result = isPrime(num);
+		const output = `${num} is ${result ? 'a prime number' : 'not a prime number'}.`;
+		console.log(output);
+		writeToFile(output);
+		showMenu();
+		getUserChoice();
+	});
+}
+function checkNivenNumber() {
+	rl.question('Enter a number to check if it is a Niven number: ', (input) => {
+		const num = parseInt(input);
+		const result = isNiven(num);
+		const output = `${num} is ${result ? 'a Niven number' : 'not a Niven number'}.`;
+		console.log(output);
+		writeToFile(output);
+		showMenu();
+		getUserChoice();
+	});
+}
+function readOutputFile() {
+	fs.readFile('output.txt', 'utf8', (err, data) => {
+		if (err) {
+		console.error('Error reading file:', err);
+	} else {
+		console.log('Contents of output.txt:\n', data);
+	}
+	showMenu();
+	getUserChoice();
+	});
+}
+function getUserChoice() {
+	rl.question('Enter your choice (1-5): ', (choice) => {
+		switch (choice) {
+			case '1':
+				calculateAndStoreFactorial();
+				break;
+			case '2':
+				checkPrimeNumber();
+				break;
+			case '3':
+				checkNivenNumber();
+				break;
+			case '4':
+				readOutputFile();
+				break;
+			case '5':
+				console.log('Exiting...');
+				rl.close();
+				break;
+			default:
+				console.log('Invalid choice. Please try again.');
+				showMenu();
+				getUserChoice();
+				break;
+			}
+	});
+}
+// Start the program
+showMenu();
+getUserChoice();
+
+
+HTTP SERVER AND OPERATION
+app.js
+const http = require('http');
+// Create an HTTP server
+const server = http.createServer((req, res) => {
+ // Set response headers
+res.setHeader('Content-Type', 'text/plain');
+// Handling different HTTP methods and routes
+if (req.method === 'GET' && req.url === '/') {
+res.statusCode = 200;
+res.end('Hello, World!');
+ } else if (req.method === 'GET' && req.url === '/about') {
+ res.statusCode = 200;
+res.end('About Page');
+} else if (req.method === 'POST' && req.url === '/data') {
+let requestData = '';
+req.on('data', (chunk) => {
+requestData += chunk;
+});
+req.on('end', () => {
+res.statusCode = 200;
+res.end(`Received data: ${requestData}`);
+});
+} else {
+res.statusCode = 404;
+res.end('Not Found');
+ }
+});
+// Listen on port 3000
+server.listen(3000, () => {
+console.log('Server is running on http://localhost:3000');
+});
+Html page
+<!DOCTYPE html>
+<html>
+<body>
+<form action="http://localhost:3000/data" method="POST">
+ <label for="fname">First name:</label>
+<input type="text" id="fname" name="fname"><br><br>
+<input type="submit" value="Submit">
+</form>
+</body>
+</html>
+
+
+HTTP SERVER-GCD,REVERSE
+const http = require('http');
+const url = require('url');
+const prompt = require('prompt-sync')();
+
+// Greatest Common Divisor (GCD) of two numbers
+function calculateGCD(num1, num2) {
+    while (num2 !== 0) {
+        const temp = num2;
+        num2 = num1 % num2;
+        num1 = temp;
+    }
+    return num1;
+}
+
+// Function to reverse a number
+function reverseNumber(num) {
+    let reversed = 0;
+    while (num !== 0) {
+        reversed = reversed * 10 + num % 10;
+        num = Math.floor(num / 10);
+    }
+    return reversed;
+}
+//let n=parseInt(prompt('Enter the first number:'));
+//let m=parseInt(prompt('Enter the second number:'));
+
+const server = http.createServer((req, res) => {
+    const queryObject = url.parse(req.url, true).query;
+    const num1 = parseInt(queryObject.num1);
+    const num2 = parseInt(queryObject.num2);
+
+    // call both the functions
+    const gcd = calculateGCD(num1, num2);
+    const reversedNum1 = reverseNumber(num1);
+    const reversedNum2 = reverseNumber(num2);
+
+    // Prepare HTML response
+    const htmlResponse = `
+        <h1><center>Welcome to the Result Page</h1>
+	<h2>The Result is:</h2>
+        <p>GCD of ${num1} and ${num2} is: ${gcd}</p>
+        <p>Reverse of ${num1} is: ${reversedNum1}</p>
+        <p>Reverse of ${num2} is: ${reversedNum2}</p>
+    `;
+
+    // Set response headers and send HTML response
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(htmlResponse);
+});
+const port = 3000;
+server.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
+Html page
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate GCD and Reverse Numbers</title>
+</head>
+<body>
+    <h1>Enter two numbers:</h1>
+    <form action="http://localhost:3000" method="GET">
+        <label for="num1">Number 1:</label>
+        <input type="number" id="num1" name="num1" required><br><br>
+
+        <label for="num2">Number 2:</label>
+        <input type="number" id="num2" name="num2" required><br><br>
+
+        <button type="submit">Calculate</button>
+    </form>
+</body>
+</html>
+
+
+
+HTTP-3.
+Factorial(1 textbox,1button)
+Prime number(1 textbox,1button)
+Fibonacci series(1 textbox,1button)
+Basic calculator(2 textbox,4 buttons)
+HTML1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Menu</title>
+</head>
+<body>
+    <h1>Choose a Calculation:</h1>
+    <ul>
+        <li><a href="factorial.html">Factorial</a></li>
+        <li><a href="prime.html">Prime Checker</a></li>
+        <li><a href="fibonacci.html">Fibonacci Series</a></li>
+        <li><a href="calculator.html">Basic Calculator</a></li>
+    </ul>
+</body>
+</html>
+
+HTML2
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factorial Calculation</title>
+</head>
+<body>
+    <h1>Enter a number to calculate its factorial:</h1>
+    <form action="http://localhost:3000/factorial" method="GET">
+        <label for="num">Number:</label>
+        <input type="number" id="num" name="num" required><br><br>
+        <button type="submit">Calculate Factorial</button>
+    </form>
+</body>
+</html>
+
+JS
+const http = require('http');
+const url = require('url');
+// Function to calculate factorial
+const factorial = (n) => {
+    if (n === 0) return 1;
+    return n * factorial(n - 1);
+}
+// Function to check if a number is prime
+const isPrime = (num) => {
+    if (num <= 1) return false;
+    for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) return false;
+    }
+    return true;
+}
+// Function to generate Fibonacci series up to n
+const fibonacci = (n) => {
+    let fib = [0, 1];
+    for (let i = 2; i <= n; i++) {
+        fib.push(fib[i - 1] + fib[i - 2]);
+    }
+    return fib;
+}
+// Function for basic calculator
+const calculator = (num1, num2, operation) => {
+    switch (operation) {
+        case 'add':
+            return num1 + num2;
+        case 'subtract':
+            return num1 - num2;
+        case 'multiply':
+            return num1 * num2;
+        case 'divide':
+            return num2 !== 0 ? num1 / num2 : 'Cannot divide by zero';
+        default:
+            return 'Invalid operation';
+    }
+}
+const server = http.createServer((req, res) => {
+    const parsedUrl = url.parse(req.url, true);
+    const query = parsedUrl.query;
+    let result = '';
+    if (parsedUrl.pathname === '/factorial') {
+        const num = parseInt(query.num);
+        result = `Factorial of ${num} is: ${factorial(num)}`;
+    } else if (parsedUrl.pathname === '/prime') {
+        const num = parseInt(query.num);
+        result = `${num} is ${isPrime(num) ? 'prime' : 'not prime'}`;
+    } else if (parsedUrl.pathname === '/fibonacci') {
+        const num = parseInt(query.num);
+        result = `Fibonacci series up to ${num}: ${fibonacci(num).join(', ')}`;
+    } else if (parsedUrl.pathname === '/calculator') {
+        const num1 = parseFloat(query.num1);
+        const num2 = parseFloat(query.num2);
+        const operation = query.operation;
+        result = `Result of ${operation} operation: ${calculator(num1, num2, operation)}`;
+    }
+
+    // Send the result as HTML response
+    const htmlResponse = `
+        <h1>Result</h1>
+        <p>${result}</p>
+        <a href="index.html">Back to Main Menu</a>
+    `;
+
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(htmlResponse);
+
+});
+const port = 3000;
+server.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Checker</title>
+</head>
+<body>
+    <h1>Enter a number to check if it's prime:</h1>
+    <form action="http://localhost:3000/prime" method="GET">
+        <label for="num">Number:</label>
+        <input type="number" id="num" name="num" required><br><br>
+        <button type="submit">Check Prime</button>
+    </form>
+</body>
+</html>
+
+
+SQL
+db.js
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'pr6',
+});
+
+connection.connect((err) => {
+	if (err) 
+	{
+   		 console.error('Error connecting to MySQL: ' + err.stack);
+    		return;
+  	}
+  	console.log('Connected to MySQL as id ' + connection.threadId);
+});
+module.exports = connection;
+
+insert.js
+// insert.js
+const prompt = require('prompt-sync')(); 
+st_id=prompt('Enter the student id: ');
+st_name=prompt('Enter the student name: ');
+st_mobile=prompt('Enter the mobile number: ');
+st_emailid=prompt('Enter the email id: ');
+const newData = {
+  s_id: st_id,
+   s_name: st_name,
+  s_mobile: st_mobile,
+  s_emailid: st_emailid
+};
+const db = require('./db');
+db.query('INSERT INTO stude SET ?', newData, (err, results) => {
+  if (err) {
+    console.error('Error inserting data: ' + err);
+    process.exit(0);
+  } else {
+    console.log('Data inserted. ID:', results.insertId);
+    process.exit(0);
+  }
+});
